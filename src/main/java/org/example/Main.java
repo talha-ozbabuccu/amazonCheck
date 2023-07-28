@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.sql.SQLOutput;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -52,8 +53,8 @@ public class Main {
             WebElement minSort= driver.findElement(By.id("s-result-sort-select_1"));
             minSort.click();
             List<WebElement> productsLaptopName= driver.findElements(By.xpath("//a[@class='a-link-normal s-underline-text s-underline-link-text s-link-style a-text-normal']"));
-            List<WebElement> productsPrice= driver.findElements(By.xpath("//div[@class='a-row a-size-base a-color-base']"));
-
+            List<WebElement> productsPrice= driver.findElements(By.xpath("//span[@class='a-offscreen']"));
+            System.out.println("productsPrice.get(0).getText() = " + productsPrice.get(0).getText());
             List<Product> products= new ArrayList<>();
             for(int i = 0 ; i< productsLaptopName.size();i++ ){
                 products.add(new Product(productsLaptopName.get(i).getText(), productsPrice.get(i).getText().replace("TL","")
@@ -85,7 +86,7 @@ public class Main {
             // Verify Products
 
                 Assert.assertEquals(minPriceProduct.getName(), (productInBoxText.getText()));
-                Assert.assertEquals(minPriceProduct.getPrice(),productInBoxPrice.getText().replace("TL","").replace(",","").trim());
+                Assert.assertEquals(minPriceProduct.getPrice().trim(),productInBoxPrice.getText().replace("TL","").trim());
 
 
             }
